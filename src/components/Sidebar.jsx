@@ -4,11 +4,11 @@ import Dashboard from "./Dashboard";
 import UserList from "./UserList";
 import FinanceList from "./FinanceList";
 import GetUsers from "../controller/GetUsers";
+import AddPayment from "./AddPayment";
 
 export default function Sidebar() {
   // fetching api USERS
   const [userData, setUserData] = useState([]);
-  // console.log(userData);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,7 +36,7 @@ export default function Sidebar() {
   // button trigger function
 
   const [menuActive, setMenuActive] = useState("Dashboard");
-  // console.log("menuActive", menuActive);
+  console.log("menuActive", menuActive);
   const menuNavbar = [
     {
       title: "Dashboard",
@@ -183,7 +183,8 @@ export default function Sidebar() {
       <section className="p-4 sm:ml-64 overflow-x-auto">
         {menuActive === 'Dashboard' && <Dashboard />}
         {menuActive === 'Daftar Siswa' && <UserList userData={userData}/>}
-        {menuActive === 'Keuangan' && <FinanceList />}
+        {menuActive === 'Keuangan' && <FinanceList openActivePage={setMenuActive}/>}
+        {menuActive === 'AddPayment' && <AddPayment />}
       </section>
     </>
   );
