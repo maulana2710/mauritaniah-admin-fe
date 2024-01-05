@@ -3,6 +3,12 @@ import { useState } from "react";
 import PaymentReceipt from "./PaymentReceipt";
 
 export default function AddPayment() {
+  const [active, setActive] = useState(false);
+  console.log("🚀 ~ file: AddPayment.jsx:6 ~ AddPayment ~ active:", active)
+  
+  const closeActive = () => {
+    setActive(false)
+  }
   const [input, setInput] = useState({});
   console.log("input:", input);
   const [inputFile, setInputFile] = useState("");
@@ -18,6 +24,7 @@ export default function AddPayment() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setActive(true);
     console.log(input);
     console.log("file1 :", inputFile);
     try {
@@ -55,9 +62,9 @@ export default function AddPayment() {
         Tambah Pembayaran
       </h1>
 
-      <section className="grid grid-cols-1 lg:grid-cols-2">
+      <section className="">
         <form className="w-full mx-auto">
-          <h1 className="text-lg font-semibold text-center border-t border-secondary">
+          <h1 className="text-lg font-semibold text-center border-t border-secondary pb-4">
             Form Pengisian
           </h1>
           <div className="grid md:grid-cols-2 md:gap-6">
@@ -428,7 +435,7 @@ export default function AddPayment() {
               className="mt-1 text-sm text-gray-500 dark:text-gray-300"
               id="file_input_help"
             >
-              SVG, PNG, JPG or GIF (MAX. 800x400px).
+              PNG, JPG or PDF.
             </p>
           </div>
           {/* File */}
@@ -439,15 +446,13 @@ export default function AddPayment() {
           >
             Submit
           </button>
+          
         </form>
-        <div className="border border-primary mt-4 lg:mt-0">
-          <h1 className="text-lg text-center border-b border-primary">
-            Preview
-          </h1>
-          <div className="">
-            <PaymentReceipt />
+        {active && 
+          <div className="absolute inset-0 top-48 xl:left-20 left-0  z-50">
+            <PaymentReceipt data={input} closeActive={closeActive}/>
           </div>
-        </div>
+        }
       </section>
     </>
   );
